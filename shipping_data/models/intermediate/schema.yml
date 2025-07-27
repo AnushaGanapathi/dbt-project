@@ -1,0 +1,65 @@
+version: 2
+
+models:
+  - name: int_shipping_flat
+    description: >
+      Intermediate model containing cleaned, unpivoted shipping data.
+        This model combines raw shipping records and performs transformations using macros where applicable including:
+        - Parsing and standardizing `ship_date`
+        - Cleaning gender values to 'M' or 'F'
+        - Normalizing income level into 'Low', 'Middle', or 'High'
+        - Calculating `transit_time` in days
+        - Cleaning customer age, weights, and values
+        - Ensuring all data is valid and in consistent format
+
+
+    columns:
+      - name: order_id
+        description: Primary key for the order
+        tests:
+          - unique
+          - not_null
+
+      - name: gender
+        description: Standardized gender as 'M' or 'F'
+        tests:
+          - accepted_values:
+              values: ['M', 'F', 'unknown']
+
+      - name: income_level
+        description: Standardized customer income level
+        tests:
+          - accepted_values:
+              values: ['Low', 'Middle', 'High']
+
+      - name: ship_mode
+        description: Shipping mode as per order (cleaned)
+        tests:
+          - accepted_values:
+              values: ['First Class', 'Second Class', 'Same Day', 'Standard Class']
+
+      - name: segment
+        description: Customer segment
+        tests:
+          - accepted_values:
+              values: ['Consumer', 'Corporate', 'Home Office']
+      
+
+      - name: ship_date
+        description: Cleaned shipping date parsed to a valid date type.
+
+      - name: customer_age
+        description: Cleaned and validated customer age. Capped at 100.
+        
+      - name: source_state
+        description: State Code from which the package was originated from.        
+
+      - name: destination
+        description: Final delivery city or region.        
+
+      - name: weight_lbs
+        description: Package weight in pounds.
+
+      - name: value
+        description: Total monetary value of the order/package or sales value - only positive values. 
+

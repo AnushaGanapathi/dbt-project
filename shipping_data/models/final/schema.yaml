@@ -1,0 +1,18 @@
+version: 2
+
+models:
+  - name: dim_customers
+    description: >
+      Dimension table for customer demographics. Includes age, gender, and income level
+      associated with each order. Built from the cleaned shipping flat table.
+
+  - name: dim_dates
+    description: >
+      Date dimension table constructed from cleaned ship dates. 
+      Includes standard date parts like year, month, day of week, etc.,
+      for time-based analysis and temporal joins.
+      
+  - name: fct_orders
+    description: >
+      Fact table for order-level financial metrics such as order value. 
+      Supports KPI and revenue tracking by segment and time.

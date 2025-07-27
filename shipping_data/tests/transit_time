@@ -1,0 +1,3 @@
+SELECT *
+FROM {{ ref('int_shipping_flat') }}
+WHERE transit_time < 1 OR transit_time > 100
